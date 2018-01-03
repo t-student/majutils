@@ -2,7 +2,7 @@
 
 #' Length of unique values
 #'
-#' This function allows you to express your love of cats.
+#' This function gives you the number of unique values in a vector.
 #' @param x Vector of values.
 #' @keywords 
 #' @export
@@ -15,6 +15,14 @@ len.unique <- function(x){
 }
 
 
+#' Residual deviance check for GLM
+#'
+#' Compares resid dev with chisq having resid.df degrees of freedom.
+#' @param myglm A fitted glm model
+#' @keywords 
+#' @export
+#' @examples
+#' glm.check.res.dev()
 glm.check.res.dev <- function(myglm){
   
   # residual deviance
@@ -35,7 +43,14 @@ glm.check.res.dev <- function(myglm){
 }
 
 
-
+#' Codes p-values into significance stars
+#'
+#' Translates p < 0.05 to * etc.
+#' @param x Vector of p-values
+#' @keywords 
+#' @export
+#' @examples
+#' corstarsl(x)
 corstarsl <- function(x){ 
   require(Hmisc) 
   x <- as.matrix(x) 
@@ -60,6 +75,15 @@ corstarsl <- function(x){
   return(Rnew) 
 }
 
+
+#' Number of levels in a factor vector
+#'
+#' 
+#' @param x Vector of p-values
+#' @keywords 
+#' @export
+#' @examples
+#' how_many_levels(x)
 how_many_levels <- function(x){
   if (!is.factor(x)){
     "Not applicable"
@@ -69,6 +93,16 @@ how_many_levels <- function(x){
   
 }
 
+
+#' Used by Cbind
+#' 
+#' @param mydata Data
+#' @param rowsneeded Number of padding rows
+#' @param first Do first row
+#' @keywords 
+#' @export
+#' @examples
+#' padNA(mydata, rowsneeded, first = TRUE)
 padNA <- function (mydata, rowsneeded, first = TRUE) 
 {
   temp1 = colnames(mydata)
@@ -80,12 +114,27 @@ padNA <- function (mydata, rowsneeded, first = TRUE)
   else rbind(temp2, mydata)
 }
 
+#' Used by Cbind
+#' 
+#' @param 
+#' @keywords 
+#' @export
+#' @examples
+#' dotnames()
 dotnames <- function(...) {
   vnames <- as.list(substitute(list(...)))[-1L]
   vnames <- unlist(lapply(vnames,deparse), FALSE, FALSE)
   vnames
 }
 
+#' Version of cbind to use when you have different length data.frames
+#'
+#' 
+#' @param 
+#' @keywords 
+#' @export
+#' @examples
+#' Cbind()
 Cbind <- function(..., first = TRUE) {
   Names <- dotnames(...)
   datalist <- setNames(list(...), Names)
@@ -110,21 +159,43 @@ Cbind <- function(..., first = TRUE) {
   as_data_frame(do.call(cbind, datalist))
 }
 
-# expects pROC::roc
+
+#' Identifies the max sensitivity and specificity cutpoints
+#'
+#' 
+#' @param 
+#' @keywords 
+#' @export
+#' @examples
+#' cutpt.max.sens.spec()
 cutpt.max.sens.spec <- function(x){
   no <- which.max(x$sensitivities+x$specificities)
   res <- x$thresholds[no]
   res
 }
 
-
+#' Another cut point
+#'
+#' 
+#' @param 
+#' @keywords 
+#' @export
+#' @examples
+#' optimal_lr.eta()
 optimal_lr.eta=function(x){
   no=which.max(x$res$sens+x$res$spec)[1]
   result=x$res$lr.eta[no]
   result
 }
 
-
+#' Another cut point
+#'
+#' 
+#' @param 
+#' @keywords 
+#' @export
+#' @examples
+#' optimal_cutpoint()
 optimal_cutpoint=function(x){
   y=optimal_lr.eta(x)
   b0=unname(x$lr$coeff[1])
@@ -133,29 +204,58 @@ optimal_cutpoint=function(x){
   result
 }
 
-
+#' CI for logistic regression model (for odds ratios)
+#'
+#' 
+#' @param 
+#' @keywords 
+#' @export
+#' @examples
+#' ci.logistic()
 ci.logistic <- function(lm, dp = 3){
   or <- round(exp(coef(lm)), dp)
   ci <- round(exp(confint.default(lm)), dp)
-  
-  
   
   df = data.frame(or = or, lwr = ci[,1], upr = ci[,2])
   
   return(df)
 }
 
-
+#' Replace a value with another value.
+#' Useful for datasets where the null value is coded 99 etc.
+#'
+#' 
+#' @param 
+#' @keywords 
+#' @export
+#' @examples
+#' replace.me()
 replace.me <- function(x, repl = 88){
   y <- ifelse(x == repl, NA, x)
 }
 
+
+#' How many are missing in my vector x
+#'
+#' 
+#' @param x Vector of p-values
+#' @keywords 
+#' @export
+#' @examples
+#' n.miss()
 n.miss <- function(x){
   my.stat <- length(x[is.na(x)==T])
   return(my.stat)
 }
 
-
+#' Means and standard deviation reported as string
+#'
+#' 
+#' @param x Vector of p-values
+#' @keywords 
+#' @export
+#' @examples
+#' mean.sd()
 mean.sd <- function(x, dp = 2){
   
   my.stat <- paste0(round(mean(x, na.rm = T), dp), " (",
@@ -164,12 +264,27 @@ mean.sd <- function(x, dp = 2){
   return(my.stat)
 }
 
-
+#' Abbreviatin for length
+#'
+#' 
+#' @param x Vector of values
+#' @keywords 
+#' @export
+#' @examples
+#' len()
 len <- function(x){
   return(length(x))
 }
 
 
+#' Produces ggplot of missingness pattern
+#'
+#' 
+#' @param x Data frame
+#' @keywords 
+#' @export
+#' @examples
+#' ggplot_missing()
 ggplot_missing <- function(x){
   
   x %>% 
@@ -192,6 +307,16 @@ ggplot_missing <- function(x){
   
 }
 
+
+#' Produces ggplot of missingness pattern and saves to file
+#'
+#' 
+#' @param df Data frame
+#' @param filename Filename
+#' @keywords 
+#' @export
+#' @examples
+#' ggplot_missing()
 plot.missing <- function(df, filename){
   pdf(file=paste0("../../Output/", filename),width=5,height=5)
   print(ggplot_missing(df))

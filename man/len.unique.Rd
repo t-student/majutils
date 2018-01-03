@@ -10,7 +10,7 @@ len.unique(x)
 \item{x}{Vector of values.}
 }
 \description{
-This function allows you to express your love of cats.
+This function gives you the number of unique values in a vector.
 }
 \examples{
 len.unique()
