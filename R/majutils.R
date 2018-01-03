@@ -323,3 +323,40 @@ plot.missing <- function(df, filename){
   dev.off()
 }
 
+
+
+
+
+
+
+#' returns string w/o leading whitespace
+#'
+#' 
+#' @param x vector of character strings
+#' @keywords 
+#' @export
+#' @examples
+#' trim.leading()
+trim.leading <- function (x)  sub("^\\s+", "", x)
+
+
+#' returns string w/o trailing whitespace
+#'
+#' 
+#' @param x vector of character strings
+#' @keywords 
+#' @export
+#' @examples
+#' trim.trailing()
+trim.trailing <- function (x) sub("\\s+$", "", x)
+
+
+#' returns string w/o leading or trailing whitespace
+#'
+#' 
+#' @param x vector of character strings
+#' @keywords 
+#' @export
+#' @examples
+#' trim()
+trim <- function (x) gsub("^\\s+|\\s+$", "", x)

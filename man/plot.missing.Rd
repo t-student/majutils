@@ -4,7 +4,7 @@
 \alias{plot.missing}
 \title{Produces ggplot of missingness pattern and saves to file}
 \usage{
-\method{plot}{missing}(df, filename)
+plot.missing(df, filename)
 }
 \arguments{
 \item{df}{Data frame}
