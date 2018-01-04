@@ -3,6 +3,21 @@
 #' Length of unique values
 #'
 #' This function gives you the number of unique values in a vector.
+#' @param df Vector of values.
+#' @keywords 
+#' @export
+#' @examples
+#' col.names()
+col.names <- function(df){
+  
+  return(as.data.frame(names(df)))
+  
+}
+
+
+#' Length of unique values
+#'
+#' This function gives you the number of unique values in a vector.
 #' @param x Vector of values.
 #' @keywords 
 #' @export
@@ -251,15 +266,17 @@ n.miss <- function(x){
   return(my.stat)
 }
 
+
+
 #' Means and standard deviation reported as string
 #'
 #' 
-#' @param x Vector of p-values
+#' @param x Vector of numeric values
 #' @keywords 
 #' @export
 #' @examples
-#' mean.sd()
-mean.sd <- function(x, dp = 2){
+#' mean_sd()
+mean_sd <- function(x, dp = 2){
   
   my.stat <- paste0(round(mean(x, na.rm = T), dp), " (",
                     round(sd(x, na.rm = T), dp),")")
