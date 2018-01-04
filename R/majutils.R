@@ -232,7 +232,10 @@ ci.logistic <- function(lm, dp = 3){
 #' replace.me()
 replace.me <- function(x, repl = 88){
   y <- ifelse(x == repl, NA, x)
+  return(as.character(y))
 }
+
+
 
 
 #' How many are missing in my vector x
@@ -360,3 +363,19 @@ trim.trailing <- function (x) sub("\\s+$", "", x)
 #' @examples
 #' trim()
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+
+
+
+
+#' returns string up to the first instance of whitespace
+#'
+#' 
+#' @param x vector of character strings
+#' @keywords 
+#' @export
+#' @examples
+#' extract.up.to.whitespace()
+extract.up.to.whitespace <- function(x) gsub( " .*$", "", x )
+
+
+
