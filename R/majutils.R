@@ -8,8 +8,8 @@
 #' @keywords cats
 #' @export
 #' @examples
-#' list.to.df()
-list.to.df <- function(l0){
+#' list_to_df()
+list_to_df <- function(l0){
   
   df1 <- data.frame(matrix(unlist(l0), nrow=length(l0[[1]]), byrow=F), stringsAsFactors=FALSE)
   names(df1) <- names(l0)
@@ -31,8 +31,8 @@ list.to.df <- function(l0){
 #' @keywords cats
 #' @export
 #' @examples
-#' diff.means()
-diff.means <- function(x1, x2, s1, s2, n1, n2){
+#' diff_means()
+diff_means <- function(x1, x2, s1, s2, n1, n2){
   
   x.diff <- x2 - x1
   
