@@ -6,9 +6,9 @@
 \usage{
 dotnames(...)
 }
+\arguments{
+\item{dotnames()}{}
+}
 \description{
 Used by Cbind
-}
-\examples{
-dotnames()
 }

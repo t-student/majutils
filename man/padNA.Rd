@@ -11,11 +11,9 @@ padNA(mydata, rowsneeded, first = TRUE)
 
 \item{rowsneeded}{Number of padding rows}
 
-\item{first}{Do first row}
+\item{first}{Do first row
+padNA(mydata, rowsneeded, first = TRUE)}
 }
 \description{
 Used by Cbind
-}
-\examples{
-padNA(mydata, rowsneeded, first = TRUE)
 }

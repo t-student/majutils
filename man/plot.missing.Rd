@@ -8,8 +8,6 @@ plot.missing(df, filename)
 }
 \arguments{
 \item{df}{Data frame}
-
-\item{filename}{Filename}
 }
 \description{
 Produces ggplot of missingness pattern and saves to file

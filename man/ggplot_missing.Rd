@@ -7,11 +7,9 @@
 ggplot_missing(x)
 }
 \arguments{
-\item{x}{Data frame}
+\item{x}{Data frame
+ggplot_missing()}
 }
 \description{
 Produces ggplot of missingness pattern
-}
-\examples{
-ggplot_missing()
 }

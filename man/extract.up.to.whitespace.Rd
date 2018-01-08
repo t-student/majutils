@@ -7,11 +7,9 @@
 extract.up.to.whitespace(x)
 }
 \arguments{
-\item{x}{vector of character strings}
+\item{x}{vector of character strings
+extract.up.to.whitespace()}
 }
 \description{
 returns string up to the first instance of whitespace
-}
-\examples{
-extract.up.to.whitespace()
 }

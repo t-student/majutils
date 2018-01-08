@@ -7,11 +7,9 @@
 corstarsl(x)
 }
 \arguments{
-\item{x}{Vector of p-values}
+\item{x}{Vector of p-values
+corstarsl(x)}
 }
 \description{
 Translates p < 0.05 to * etc.
-}
-\examples{
-corstarsl(x)
 }

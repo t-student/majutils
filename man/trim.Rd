@@ -7,11 +7,9 @@
 trim(x)
 }
 \arguments{
-\item{x}{vector of character strings}
+\item{x}{vector of character strings
+trim()}
 }
 \description{
 returns string w/o leading or trailing whitespace
-}
-\examples{
-trim()
 }

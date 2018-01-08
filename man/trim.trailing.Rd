@@ -7,11 +7,9 @@
 trim.trailing(x)
 }
 \arguments{
-\item{x}{vector of character strings}
+\item{x}{vector of character strings
+trim.trailing()}
 }
 \description{
 returns string w/o trailing whitespace
-}
-\examples{
-trim.trailing()
 }

@@ -7,11 +7,9 @@
 trim.leading(x)
 }
 \arguments{
-\item{x}{vector of character strings}
+\item{x}{vector of character strings
+trim.leading()}
 }
 \description{
 returns string w/o leading whitespace
-}
-\examples{
-trim.leading()
 }

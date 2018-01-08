@@ -7,11 +7,9 @@
 how_many_levels(x)
 }
 \arguments{
-\item{x}{Vector of p-values}
+\item{x}{Vector of p-values
+how_many_levels(x)}
 }
 \description{
 Number of levels in a factor vector
-}
-\examples{
-how_many_levels(x)
 }

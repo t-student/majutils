@@ -7,11 +7,9 @@
 mean_sd(x, dp = 2)
 }
 \arguments{
-\item{x}{Vector of numeric values}
+\item{x}{Vector of numeric values
+mean_sd()}
 }
 \description{
 Means and standard deviation reported as string
-}
-\examples{
-mean_sd()
 }
