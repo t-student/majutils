@@ -5,6 +5,9 @@
 #' of the vectors as the column names of the data.frame.
 #'
 #' @param l0 list of vectors all of equal length
+#' @keywords cats
+#' @export
+#' @examples
 #' list.to.df()
 list.to.df <- function(l0){
   
@@ -25,6 +28,9 @@ list.to.df <- function(l0){
 #' @param s2 Vector of 2nd sample sd
 #' @param n1 Vector of 1st sample size
 #' @param n2 Vector of 2nd sample size
+#' @keywords cats
+#' @export
+#' @examples
 #' diff.means()
 diff.means <- function(x1, x2, s1, s2, n1, n2){
   
@@ -63,6 +69,9 @@ diff.means <- function(x1, x2, s1, s2, n1, n2){
 #' @param s2 Vector of 2nd sample sd
 #' @param n1 Vector of 1st sample size
 #' @param n2 Vector of 2nd sample size
+#' @keywords cats
+#' @export
+#' @examples
 #' pooled_sd()
 pooled_sd <- function(s1, s2, n1, n2){
   
@@ -77,6 +86,9 @@ pooled_sd <- function(s1, s2, n1, n2){
 #' @param s2 Vector of 2nd sample sd
 #' @param n1 Vector of 1st sample size
 #' @param n2 Vector of 2nd sample size
+#' @keywords cats
+#' @export
+#' @examples
 #' dof_approx()
 dof_approx <- function(s1, s2, n1, n2){
   
@@ -106,7 +118,10 @@ dof_approx <- function(s1, s2, n1, n2){
 #'
 #' This function gives you the number of unique values in a vector.
 #' @param x Vector of values.
-#' desc.stat()
+#' @keywords cats
+#' @export
+#' @examples
+#' desc.stat.str()
 desc.stat.str <- function(x){
   
   
@@ -136,6 +151,9 @@ desc.stat.str <- function(x){
 #'
 #' This function gives you the number of unique values in a vector.
 #' @param df Vector of values.
+#' @keywords cats
+#' @export
+#' @examples
 #' col.names()
 col.names <- function(df){
   
@@ -148,6 +166,9 @@ col.names <- function(df){
 #'
 #' This function gives you the number of unique values in a vector.
 #' @param x Vector of values.
+#' @keywords cats
+#' @export
+#' @examples
 #' len.unique()
 len.unique <- function(x){
   
@@ -160,6 +181,9 @@ len.unique <- function(x){
 #'
 #' Compares resid dev with chisq having resid.df degrees of freedom.
 #' @param myglm A fitted glm model
+#' @keywords cats
+#' @export
+#' @examples
 #' glm.check.res.dev()
 glm.check.res.dev <- function(myglm){
   
@@ -185,6 +209,9 @@ glm.check.res.dev <- function(myglm){
 #'
 #' Translates p < 0.05 to * etc.
 #' @param x Vector of p-values
+#' @keywords cats
+#' @export
+#' @examples
 #' corstarsl(x)
 corstarsl <- function(x){ 
   require(Hmisc) 
@@ -215,6 +242,9 @@ corstarsl <- function(x){
 #'
 #' 
 #' @param x Vector of p-values
+#' @keywords cats
+#' @export
+#' @examples
 #' how_many_levels(x)
 how_many_levels <- function(x){
   if (!is.factor(x)){
@@ -231,6 +261,9 @@ how_many_levels <- function(x){
 #' @param mydata Data
 #' @param rowsneeded Number of padding rows
 #' @param first Do first row
+#' @keywords cats
+#' @export
+#' @examples
 #' padNA(mydata, rowsneeded, first = TRUE)
 padNA <- function (mydata, rowsneeded, first = TRUE) 
 {
@@ -246,6 +279,9 @@ padNA <- function (mydata, rowsneeded, first = TRUE)
 #' Used by Cbind
 #' 
 #' @param 
+#' @keywords cats
+#' @export
+#' @examples
 #' dotnames()
 dotnames <- function(...) {
   vnames <- as.list(substitute(list(...)))[-1L]
@@ -257,6 +293,9 @@ dotnames <- function(...) {
 #'
 #' 
 #' @param 
+#' @keywords cats
+#' @export
+#' @examples
 #' Cbind()
 Cbind <- function(..., first = TRUE) {
   Names <- dotnames(...)
@@ -287,6 +326,9 @@ Cbind <- function(..., first = TRUE) {
 #'
 #' 
 #' @param 
+#' @keywords cats
+#' @export
+#' @examples
 #' cutpt.max.sens.spec()
 cutpt.max.sens.spec <- function(x){
   no <- which.max(x$sensitivities+x$specificities)
@@ -298,6 +340,9 @@ cutpt.max.sens.spec <- function(x){
 #'
 #' 
 #' @param 
+#' @keywords cats
+#' @export
+#' @examples
 #' optimal_lr.eta()
 optimal_lr.eta=function(x){
   no=which.max(x$res$sens+x$res$spec)[1]
@@ -309,6 +354,9 @@ optimal_lr.eta=function(x){
 #'
 #' 
 #' @param 
+#' @keywords cats
+#' @export
+#' @examples
 #' optimal_cutpoint()
 optimal_cutpoint=function(x){
   y=optimal_lr.eta(x)
@@ -322,6 +370,9 @@ optimal_cutpoint=function(x){
 #'
 #' 
 #' @param 
+#' @keywords cats
+#' @export
+#' @examples
 #' ci.logistic()
 ci.logistic <- function(lm, dp = 3){
   or <- round(exp(coef(lm)), dp)
@@ -337,6 +388,9 @@ ci.logistic <- function(lm, dp = 3){
 #'
 #' 
 #' @param 
+#' @keywords cats
+#' @export
+#' @examples
 #' replace.me()
 replace.me <- function(x, repl = 88){
   y <- ifelse(x == repl, NA, x)
@@ -350,6 +404,9 @@ replace.me <- function(x, repl = 88){
 #'
 #' 
 #' @param x Vector of p-values
+#' @keywords cats
+#' @export
+#' @examples
 #' n.miss()
 n.miss <- function(x){
   my.stat <- length(x[is.na(x)==T])
@@ -362,6 +419,9 @@ n.miss <- function(x){
 #'
 #' 
 #' @param x Vector of numeric values
+#' @keywords cats
+#' @export
+#' @examples
 #' mean_sd()
 mean_sd <- function(x, dp = 2){
   
@@ -375,6 +435,9 @@ mean_sd <- function(x, dp = 2){
 #'
 #' 
 #' @param x Vector of values
+#' @keywords cats
+#' @export
+#' @examples
 #' len()
 len <- function(x){
   return(length(x))
@@ -385,6 +448,9 @@ len <- function(x){
 #'
 #' 
 #' @param x Data frame
+#' @keywords cats
+#' @export
+#' @examples
 #' ggplot_missing()
 ggplot_missing <- function(x){
   
@@ -413,6 +479,8 @@ ggplot_missing <- function(x){
 #'
 #' 
 #' @param df Data frame
+#' @keywords cats
+#' @export
 #' @examples
 #' ggplot_missing()
 plot.missing <- function(df, filename){
@@ -431,6 +499,9 @@ plot.missing <- function(df, filename){
 #'
 #' 
 #' @param x vector of character strings
+#' @keywords cats
+#' @export
+#' @examples
 #' trim.leading()
 trim.leading <- function (x)  sub("^\\s+", "", x)
 
@@ -439,6 +510,9 @@ trim.leading <- function (x)  sub("^\\s+", "", x)
 #'
 #' 
 #' @param x vector of character strings
+#' @keywords cats
+#' @export
+#' @examples
 #' trim.trailing()
 trim.trailing <- function (x) sub("\\s+$", "", x)
 
@@ -447,6 +521,9 @@ trim.trailing <- function (x) sub("\\s+$", "", x)
 #'
 #' 
 #' @param x vector of character strings
+#' @keywords cats
+#' @export
+#' @examples
 #' trim()
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 
@@ -457,6 +534,9 @@ trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 #'
 #' 
 #' @param x vector of character strings
+#' @keywords cats
+#' @export
+#' @examples
 #' extract.up.to.whitespace()
 extract.up.to.whitespace <- function(x) gsub( " .*$", "", x )
 

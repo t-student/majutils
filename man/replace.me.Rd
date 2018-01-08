@@ -7,10 +7,11 @@ Useful for datasets where the null value is coded 99 etc.}
 \usage{
 replace.me(x, repl = 88)
 }
-\arguments{
-\item{replace.me()}{}
-}
 \description{
 Replace a value with another value.
 Useful for datasets where the null value is coded 99 etc.
 }
+\examples{
+replace.me()
+}
+\keyword{cats}

@@ -9,11 +9,14 @@ of the vectors as the column names of the data.frame.}
 list.to.df(l0)
 }
 \arguments{
-\item{l0}{list of vectors all of equal length
-list.to.df()}
+\item{l0}{list of vectors all of equal length}
 }
 \description{
 List to data frame (actually tibble). Uses length of 
 first vector to define number of rows. Uses the names
 of the vectors as the column names of the data.frame.
 }
+\examples{
+list.to.df()
+}
+\keyword{cats}

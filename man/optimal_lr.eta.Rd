@@ -6,9 +6,10 @@
 \usage{
 optimal_lr.eta(x)
 }
-\arguments{
-\item{optimal_lr.eta()}{}
-}
 \description{
 Another cut point
 }
+\examples{
+optimal_lr.eta()
+}
+\keyword{cats}

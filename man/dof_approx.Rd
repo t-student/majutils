@@ -13,9 +13,12 @@ dof_approx(s1, s2, n1, n2)
 
 \item{n1}{Vector of 1st sample size}
 
-\item{n2}{Vector of 2nd sample size
-dof_approx()}
+\item{n2}{Vector of 2nd sample size}
 }
 \description{
 Welch satterthwaite - degrees of freedom approximation
 }
+\examples{
+dof_approx()
+}
+\keyword{cats}

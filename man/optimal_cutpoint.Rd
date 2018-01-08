@@ -6,9 +6,10 @@
 \usage{
 optimal_cutpoint(x)
 }
-\arguments{
-\item{optimal_cutpoint()}{}
-}
 \description{
 Another cut point
 }
+\examples{
+optimal_cutpoint()
+}
+\keyword{cats}

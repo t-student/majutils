@@ -7,9 +7,12 @@
 glm.check.res.dev(myglm)
 }
 \arguments{
-\item{myglm}{A fitted glm model
-glm.check.res.dev()}
+\item{myglm}{A fitted glm model}
 }
 \description{
 Compares resid dev with chisq having resid.df degrees of freedom.
 }
+\examples{
+glm.check.res.dev()
+}
+\keyword{cats}

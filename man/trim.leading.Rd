@@ -7,9 +7,12 @@
 trim.leading(x)
 }
 \arguments{
-\item{x}{vector of character strings
-trim.leading()}
+\item{x}{vector of character strings}
 }
 \description{
 returns string w/o leading whitespace
 }
+\examples{
+trim.leading()
+}
+\keyword{cats}

@@ -7,9 +7,12 @@
 n.miss(x)
 }
 \arguments{
-\item{x}{Vector of p-values
-n.miss()}
+\item{x}{Vector of p-values}
 }
 \description{
 How many are missing in my vector x
 }
+\examples{
+n.miss()
+}
+\keyword{cats}

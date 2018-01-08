@@ -7,9 +7,12 @@
 len.unique(x)
 }
 \arguments{
-\item{x}{Vector of values.
-len.unique()}
+\item{x}{Vector of values.}
 }
 \description{
 This function gives you the number of unique values in a vector.
 }
+\examples{
+len.unique()
+}
+\keyword{cats}

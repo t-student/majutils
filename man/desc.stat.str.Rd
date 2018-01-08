@@ -7,9 +7,12 @@
 desc.stat.str(x)
 }
 \arguments{
-\item{x}{Vector of values.
-desc.stat()}
+\item{x}{Vector of values.}
 }
 \description{
 This function gives you the number of unique values in a vector.
 }
+\examples{
+desc.stat.str()
+}
+\keyword{cats}

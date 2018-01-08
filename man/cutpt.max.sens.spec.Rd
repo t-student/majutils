@@ -6,9 +6,10 @@
 \usage{
 cutpt.max.sens.spec(x)
 }
-\arguments{
-\item{cutpt.max.sens.spec()}{}
-}
 \description{
 Identifies the max sensitivity and specificity cutpoints
 }
+\examples{
+cutpt.max.sens.spec()
+}
+\keyword{cats}

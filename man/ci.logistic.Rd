@@ -6,9 +6,10 @@
 \usage{
 ci.logistic(lm, dp = 3)
 }
-\arguments{
-\item{ci.logistic()}{}
-}
 \description{
 CI for logistic regression model (for odds ratios)
 }
+\examples{
+ci.logistic()
+}
+\keyword{cats}

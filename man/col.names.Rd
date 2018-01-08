@@ -7,9 +7,12 @@
 col.names(df)
 }
 \arguments{
-\item{df}{Vector of values.
-col.names()}
+\item{df}{Vector of values.}
 }
 \description{
 This function gives you the number of unique values in a vector.
 }
+\examples{
+col.names()
+}
+\keyword{cats}

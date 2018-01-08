@@ -6,9 +6,10 @@
 \usage{
 Cbind(..., first = TRUE)
 }
-\arguments{
-\item{Cbind()}{}
-}
 \description{
 Version of cbind to use when you have different length data.frames
 }
+\examples{
+Cbind()
+}
+\keyword{cats}

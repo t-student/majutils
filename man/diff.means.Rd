@@ -17,9 +17,12 @@
 
 \item{n1}{Vector of 1st sample size}
 
-\item{n2}{Vector of 2nd sample size
-diff.means()}
+\item{n2}{Vector of 2nd sample size}
 }
 \description{
 looks at x2 - x1
 }
+\examples{
+diff.means()
+}
+\keyword{cats}

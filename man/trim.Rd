@@ -7,9 +7,12 @@
 trim(x)
 }
 \arguments{
-\item{x}{vector of character strings
-trim()}
+\item{x}{vector of character strings}
 }
 \description{
 returns string w/o leading or trailing whitespace
 }
+\examples{
+trim()
+}
+\keyword{cats}

@@ -7,9 +7,12 @@
 ggplot_missing(x)
 }
 \arguments{
-\item{x}{Data frame
-ggplot_missing()}
+\item{x}{Data frame}
 }
 \description{
 Produces ggplot of missingness pattern
 }
+\examples{
+ggplot_missing()
+}
+\keyword{cats}

@@ -7,9 +7,12 @@
 len(x)
 }
 \arguments{
-\item{x}{Vector of values
-len()}
+\item{x}{Vector of values}
 }
 \description{
 Abbreviatin for length
 }
+\examples{
+len()
+}
+\keyword{cats}

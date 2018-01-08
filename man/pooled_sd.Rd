@@ -13,9 +13,12 @@ pooled_sd(s1, s2, n1, n2)
 
 \item{n1}{Vector of 1st sample size}
 
-\item{n2}{Vector of 2nd sample size
-pooled_sd()}
+\item{n2}{Vector of 2nd sample size}
 }
 \description{
 Gets pooled standard deviation
 }
+\examples{
+pooled_sd()
+}
+\keyword{cats}
