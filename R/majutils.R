@@ -1,5 +1,40 @@
 
 
+#' Proportion of entries in a vector equal to 
+#' a specified value. Provided as a fraction or
+#' percentage.
+#'
+#' @param x vector of values
+#' @param level entry of interest
+#' @param dp decimal places
+#' @param percent provide in percentage terms
+#' @keywords fred
+#' @export
+#' @examples
+#' list_to_df()
+prop <- function(x, level, dp = 1, percent = T){
+  
+  x2 <- as.character(x)
+  lvl2 <- as.character(level)
+  
+  myfreq <- length(x2[x2 == lvl2])
+  
+  myprop <- myfreq / len(x2)
+  
+  if (percent){
+    myprop <- round(myprop*100, dp)
+  } else {
+    myprop <- round(myprop, dp)
+  }
+  
+  myprop
+}
+
+
+
+
+
+
 #' List to data frame (actually tibble). Uses length of 
 #' first vector to define number of rows. Uses the names
 #' of the vectors as the column names of the data.frame.
