@@ -23,6 +23,6 @@ a specified value. Provided as a fraction or
 percentage.
 }
 \examples{
-list_to_df()
+prop()
 }
 \keyword{fred}

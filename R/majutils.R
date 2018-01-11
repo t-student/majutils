@@ -1,5 +1,76 @@
 
 
+#' Produces a basic latex table for glm coefs.
+#'
+#' @param lm1 glm
+#' @param dp dec places to use
+#' @param thefilename output filename
+#' @keywords emma
+#' @export
+#' @examples
+#' glm_table()
+glm_table <- function(lm1, dp = 2,
+                      inverselink = exp,
+                      outname = 'tmp.tex'){
+  
+  s1 <- summary(lm1)
+  coefs <- s1$coefficients
+  
+  if (!is.null(inverselink)){
+    coefs[,1] <- inverselink(coefs[,1])
+  }
+  
+  ci <- confint(lm1)
+  
+  if (!is.null(inverselink)){
+    ci[,1] <- inverselink(ci[,1])
+    ci[,2] <- inverselink(ci[,2])
+  }
+ # ci <- round(confint(lm1), dp)
+  
+  tbl <- data_frame(names = rownames(coefs),
+                    est = sprintf(paste0("%.", dp, "f"), coefs[,1]), 
+                    ci = sprintf(paste0("%.", dp, "f", " to ", "%.", dp, "f"),   ci[,1],   ci[,2]),
+                    p = replace.p.values(coefs[,4])) %>%
+    sapply(., as.character) %>%
+    as_data_frame(.) %>%
+    xtable::xtable(.)
+  
+  sink(outname)
+  print(tbl, only.contents=TRUE, include.rownames=F, 
+        include.colnames=F, floating=F,
+        hline.after=NULL, sanitize.text.function=identity)
+  sink()
+  
+}
+
+
+
+#' Converts the p-values to significance stars.
+#'
+#' @param x vector of p-values
+#' @keywords emma
+#' @export
+#' @examples
+#' star.wars()
+star.wars <- function(x){
+  out <- ifelse(is.na(x), "", ifelse(x < 0.1, ifelse(x < 0.05, ifelse(x < 0.01, "***", "**"), '*'), ""))
+  out
+}
+
+#' Converts the p-values to the common rounded representations (< 0.05 etc).
+#'
+#' @param x vector of p-values
+#' @param dp dec places to use
+#' @keywords emma
+#' @export
+#' @examples
+#' replace.p.values()
+replace.p.values <- function(x, dp = 3){
+  out <- ifelse(is.na(x), "", ifelse(x < 0.05, ifelse(x < 0.01, "x < 0.01", "x < 0.05"), paste0(round(x, dp))))
+  out
+}
+
 #' Proportion of entries in a vector equal to 
 #' a specified value. Provided as a fraction or
 #' percentage.
@@ -11,7 +82,7 @@
 #' @keywords fred
 #' @export
 #' @examples
-#' list_to_df()
+#' prop()
 prop <- function(x, level, dp = 1, percent = T){
   
   x2 <- as.character(x)
