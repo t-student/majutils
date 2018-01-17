@@ -2,15 +2,17 @@
 % Please edit documentation in R/majutils.R
 \name{plot.missing}
 \alias{plot.missing}
-\title{Produces ggplot of missingness pattern and saves to file}
+\title{Method to call to produce ggplot of missingness 
+pattern and save to file.}
 \usage{
-plot.missing(df, filename)
+plot.missing(df, filename, showme = T)
 }
 \arguments{
 \item{df}{Data frame}
 }
 \description{
-Produces ggplot of missingness pattern and saves to file
+Method to call to produce ggplot of missingness 
+pattern and save to file.
 }
 \examples{
 plot.missing()

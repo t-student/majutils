@@ -550,7 +550,8 @@ len <- function(x){
 }
 
 
-#' Produces ggplot of missingness pattern
+#' Produces ggplot of missingness pattern with numbers of 
+#' missing at top.
 #'
 #' 
 #' @param x Data frame
@@ -560,12 +561,21 @@ len <- function(x){
 #' ggplot_missing()
 ggplot_missing <- function(x){
   
-  x %>% 
+  require(grid)
+  require(ggplot2)
+  
+  # Rownumber, variable, indicator of missingness
+  df.miss <- x %>% 
     is.na %>%
-    reshape2::melt(.) %>%
-    ggplot(data = .,
-           aes(x = Var2,
-               y = Var1)) +
+    reshape2::melt(.)
+  
+  df.sum <- df.miss %>%
+    dplyr::group_by(Var2) %>%
+    dplyr::summarise(n.miss = sum(value))
+  n.recs <- nrow(x)
+  
+
+  p <- ggplot(data = df.miss, aes(x = Var2,y = Var1)) +
     geom_raster(aes(fill = !value)) +
     scale_fill_manual(values = c("black", "white"))+
     #scale_fill_grey(name = "",
@@ -575,13 +585,33 @@ ggplot_missing <- function(x){
           panel.background = element_blank(), axis.line = element_line(colour = "black"))+
     theme(legend.position="none")+
     theme(axis.text.x  = element_text(angle=45, hjust=1, vjust=0.9)) + 
-    labs(x = "",
-         y = "Participant")
+    labs(x = "", y = "Participant")+
+    theme(plot.margin = unit(c(2,1,1,1), "lines"))
+  
+  # Add number missing at top of plot
+  for (i in 1:length(df.sum$Var2))  {
+    p <- p + annotation_custom(
+      grob = textGrob(label = df.sum$n.miss[i], 
+                      hjust = 0, 
+                      gp = gpar(cex = 0.7)),
+      ymin = n.recs + 10,      # Vertical position of the textGrob
+      ymax = n.recs + 10,
+      xmin = df.sum$Var2[i],  
+      xmax = df.sum$Var2[i])
+  }  
+  
+  
+  gt <- ggplot_gtable(ggplot_build(p))
+  gt$layout$clip[gt$layout$name == "panel"] <- "off"
+  grid.draw(gt)
+  
+  
   
 }
 
 
-#' Produces ggplot of missingness pattern and saves to file
+#' Method to call to produce ggplot of missingness 
+#' pattern and save to file.
 #'
 #' 
 #' @param df Data frame
@@ -589,10 +619,14 @@ ggplot_missing <- function(x){
 #' @export
 #' @examples
 #' plot.missing()
-plot.missing <- function(df, filename){
+plot.missing <- function(df, filename, showme = T){
   pdf(file=paste0("../../Output/", filename),width=5,height=5)
   print(ggplot_missing(df))
   dev.off()
+  
+  if(showme){
+    print(ggplot_missing(df))
+  }
 }
 
 
