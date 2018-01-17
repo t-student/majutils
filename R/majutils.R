@@ -574,6 +574,7 @@ ggplot_missing <- function(x){
     dplyr::summarise(n.miss = sum(value))
   n.recs <- nrow(x)
   
+  myylab <- paste0("Participant (n = ", n.recs, ")")
 
   p <- ggplot(data = df.miss, aes(x = Var2,y = Var1)) +
     geom_raster(aes(fill = !value)) +
@@ -585,7 +586,7 @@ ggplot_missing <- function(x){
           panel.background = element_blank(), axis.line = element_line(colour = "black"))+
     theme(legend.position="none")+
     theme(axis.text.x  = element_text(angle=45, hjust=1, vjust=0.9)) + 
-    labs(x = "", y = "Participant")+
+    labs(x = "", y = myylab)+
     theme(plot.margin = unit(c(2,1,1,1), "lines"))
   
   # Add number missing at top of plot
