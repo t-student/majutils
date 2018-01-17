@@ -588,7 +588,7 @@ ggplot_missing <- function(x){
 #' @keywords cats
 #' @export
 #' @examples
-#' ggplot_missing()
+#' plot.missing()
 plot.missing <- function(df, filename){
   pdf(file=paste0("../../Output/", filename),width=5,height=5)
   print(ggplot_missing(df))
