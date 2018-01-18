@@ -616,12 +616,17 @@ ggplot_missing <- function(x){
 #'
 #' 
 #' @param df Data frame
+#' @param filename file of plot (uses Output directory as prefix)
+#' @param showme display plot as well as save
+#' @param width width (cm)
+#' @param height height (cm)
 #' @keywords cats
 #' @export
 #' @examples
 #' plot.missing()
-plot.missing <- function(df, filename, showme = T){
-  pdf(file=paste0("../../Output/", filename),width=5,height=5)
+plot.missing <- function(df, filename, showme = T, 
+                         width = 5, height = 5){
+  pdf(file=paste0("../../Output/", filename),width=width,height=width)
   print(ggplot_missing(df))
   dev.off()
   
