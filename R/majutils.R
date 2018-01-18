@@ -626,7 +626,9 @@ ggplot_missing <- function(x){
 #' plot.missing()
 plot.missing <- function(df, filename, showme = T, 
                          width = 5, height = 5){
-  pdf(file=paste0("../../Output/", filename),width=width,height=width)
+  pdf(file=paste0("../../Output/", filename),
+      width=width,
+      height=height)
   print(ggplot_missing(df))
   dev.off()
   
