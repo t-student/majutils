@@ -1,5 +1,34 @@
 
 
+
+
+#' Duplicates a dataframe n times and appends the duplicates
+#' to the original one.
+#'
+#' @param df data frame to duplicate
+#' @param times number of copies required
+#' @keywords emma
+#' @export
+#' @examples
+#' duplicate_df()
+duplicate_df <- function(df, times = 2){
+  
+  # n <- 10
+  # df.new1$subject <- rep(100:109, each = 3)
+  
+  df.new <- do.call("rbind", replicate(times, df, simplify = FALSE))
+  
+  return(df.new)
+}
+
+
+
+
+
+
+
+
+
 #' Produces a basic latex table for glm coefs.
 #'
 #' @param lm1 glm
