@@ -1,7 +1,14 @@
 
 
 
-
+ggplot2::theme_set(theme_bw())
+ggplot2::theme_update(legend.position="bottom")
+ggplot2::theme_update(legend.title=element_blank())
+# See http://ggplot2.tidyverse.org/reference/theme.html
+ggplot2::theme_update(text=element_text(size=12,  family="sans"))
+ggplot2::theme_update(axis.text.x=element_text(size=10,  family="sans"))
+ggplot2::theme_update(axis.text.y=element_text(size=10,  family="sans"))
+f.sep <- .Platform$file.sep
 
 
 
