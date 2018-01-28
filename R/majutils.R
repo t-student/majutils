@@ -2,6 +2,57 @@
 
 
 
+
+
+
+
+
+
+#' Just reference code.
+#' Produces a list of ggplots with different font styles.
+#'
+#' @keywords emma
+#' @export
+#' @examples
+#' gg_testplot01()
+gg_testplot01 <- function(){
+  
+  
+  windowsFonts()
+  # $serif
+  # [1] "TT Times New Roman"
+  # 
+  # $sans
+  # [1] "TT Arial"
+  # 
+  # $mono
+  # [1] "TT Courier New"
+  
+  
+  library(ggplot2)
+  p1 <- ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point() +
+    ggtitle("Fuel Efficiency of 32 Cars") +
+    xlab("Weight (x1000 lb)") + ylab("Miles per Gallon") +
+    theme(text=element_text(size=16,  family="sans"))
+  
+  p2 <- ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point() +
+    ggtitle("Fuel Efficiency of 32 Cars") +
+    xlab("Weight (x1000 lb)") + ylab("Miles per Gallon") +
+    theme(text=element_text(size=16,  family="serif"))
+
+  
+  return(list(p1.sans = p1, p2.serif = p2))
+  
+}
+
+
+
+
+
+
+
+
+
 #' Duplicates a dataframe n times and appends the duplicates
 #' to the original one.
 #'
