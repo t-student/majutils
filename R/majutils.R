@@ -16,7 +16,7 @@ not_numeric <- function(x){
   df.2 <- suppressWarnings(df.1  %>%
     dplyr::filter(is.na(as.numeric(x))))
   
-  return(as.data.frame(sort(unique(df.2$x))))
+  return(as_data_frame(x = sort(unique(df.2$x))))
 }
 
 

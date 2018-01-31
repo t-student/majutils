@@ -2,7 +2,9 @@
 % Please edit documentation in R/majutils.R
 \name{not_numeric}
 \alias{not_numeric}
-\title{Displays a sorted vector of values that were not numeric.}
+\title{Utility function that provides a sorted vector of the
+values that were not numeric in the vector passed to
+not_numeric.}
 \usage{
 not_numeric(x)
 }
@@ -10,7 +12,9 @@ not_numeric(x)
 \item{x}{vector of values}
 }
 \description{
-Displays a sorted vector of values that were not numeric.
+Utility function that provides a sorted vector of the
+values that were not numeric in the vector passed to
+not_numeric.
 }
 \examples{
 not_numeric()
