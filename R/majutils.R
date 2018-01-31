@@ -1,5 +1,25 @@
 
 
+
+#' Utility function that provides a sorted vector of the
+#' values that were not numeric in the vector passed to
+#' not_numeric.
+#'
+#' @param x vector of values
+#' @keywords 
+#' @export
+#' @examples
+#' not_numeric()
+not_numeric <- function(x){
+  
+  df.1 <- data_frame(x = as.character(x))
+  df.2 <- suppressWarnings(df.1  %>%
+    dplyr::filter(is.na(as.numeric(x))))
+  
+  return(as.data.frame(sort(unique(df.2$x))))
+}
+
+
 #' Sets up ggplot themes and some other constructor like stuff.
 #'
 #' @keywords 
