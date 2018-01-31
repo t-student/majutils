@@ -6,7 +6,7 @@
 values that were not numeric in the vector passed to
 not_numeric.}
 \usage{
-not_numeric(x)
+not_numeric(x, do.vec = F)
 }
 \arguments{
 \item{x}{vector of values}

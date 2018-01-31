@@ -10,13 +10,19 @@
 #' @export
 #' @examples
 #' not_numeric()
-not_numeric <- function(x){
+not_numeric <- function(x, do.vec = F){
   
   df.1 <- data_frame(x = as.character(x))
   df.2 <- suppressWarnings(df.1  %>%
     dplyr::filter(is.na(as.numeric(x))))
   
-  return(as_data_frame(x = sort(unique(df.2$x))))
+  if(do.vec){
+    return(x = sort(unique(df.2$x)))
+  }else{
+    return(as_data_frame(x = sort(unique(df.2$x))))
+  }
+  
+  
 }
 
 
