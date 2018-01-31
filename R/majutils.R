@@ -17,7 +17,7 @@ not_numeric <- function(x, do.vec = F){
     dplyr::filter(is.na(as.numeric(x))))
   
   if(do.vec){
-    return(x = sort(unique(df.2$x)))
+    return(sort(unique(df.2$x)))
   }else{
     return(as_data_frame(x = sort(unique(df.2$x))))
   }
