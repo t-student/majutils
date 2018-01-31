@@ -1,6 +1,20 @@
 
 
 
+#' Converts stone to kg.
+#'
+#' @param x value in stone to convert
+#' @keywords 
+#' @export
+#' @examples
+#' stone_to_kg()
+stone_to_kg <- function(x = 1){
+  
+  return(6.35029 * x)
+  
+}
+
+
 #' Utility function that provides a sorted vector of the
 #' values that were not numeric in the vector passed to
 #' not_numeric.
