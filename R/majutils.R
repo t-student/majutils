@@ -252,6 +252,38 @@ prop <- function(x, level, dp = 1, percent = T){
 
 
 
+#' Provides frequency and proportion of a given value in a vector of values
+#'
+#' @param x vector of values
+#' @param level entry of interest (can be NA)
+#' @param dp decimal places
+#' @param percent provide in percentage terms
+#' @keywords fred
+#' @export
+#' @examples
+#' freq_prop()
+freq_prop <- function(x, level, dp = 1, percent = T){
+  
+  
+  myprop <- prop(x, level, dp, percent)
+  
+  x2 <- as.character(x)
+  
+  if(is.na(level)){
+    myfreq <- length(x2[is.na(x2)])
+    
+  } else{
+    lvl2 <- as.character(level)
+    myfreq <- length(x2[x2 == lvl2])
+  }
+  
+  my.stat <- paste0(myfreq, " (", myprop, ")")
+  
+  my.stat
+}
+
+
+
 
 
 #' List to data frame (actually tibble). Uses length of 
