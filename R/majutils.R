@@ -1,32 +1,6 @@
 
 
 
-#' Prepends the prefix to pad x to nchrs in length
-#'
-#' @param x value to pad
-#' @param prefix desired prefix
-#' @param nchrs final number of chars in string
-#' @keywords 
-#' @export
-#' @examples
-#' pad_zero()
-pad_str <- function(x, prefix, nchrs){
-  
-  x.str <- as.character(x)
-  
-  if (nchar(x.str) == nchrs){
-    return(x.str) 
-  } 
-  
-  len.x <- nchar(x.str)
-  
-  chrs.reqd <- nchrs - len.x
-  
-  prefix <- paste0(rep(prefix, chrs.reqd), collapse = "")
-  x.str <- paste0(prefix, as.character(x))
-  return(x.str)
-    
-}
 
 
 
