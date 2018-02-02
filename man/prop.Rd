@@ -11,7 +11,7 @@ prop(x, level, dp = 1, percent = T)
 \arguments{
 \item{x}{vector of values}
 
-\item{level}{entry of interest}
+\item{level}{entry of interest (can be NA)}
 
 \item{dp}{decimal places}
 

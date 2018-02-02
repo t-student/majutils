@@ -1,6 +1,11 @@
 
 
 
+
+
+
+
+
 #' Converts stone to kg.
 #'
 #' @param x value in stone to convert
@@ -216,7 +221,7 @@ replace.p.values <- function(x, dp = 3){
 #' percentage.
 #'
 #' @param x vector of values
-#' @param level entry of interest
+#' @param level entry of interest (can be NA)
 #' @param dp decimal places
 #' @param percent provide in percentage terms
 #' @keywords fred
@@ -226,10 +231,15 @@ replace.p.values <- function(x, dp = 3){
 prop <- function(x, level, dp = 1, percent = T){
   
   x2 <- as.character(x)
-  lvl2 <- as.character(level)
   
-  myfreq <- length(x2[x2 == lvl2])
-  
+  if(is.na(level)){
+    myfreq <- length(x2[is.na(x2)])
+    
+  } else{
+    lvl2 <- as.character(level)
+    myfreq <- length(x2[x2 == lvl2])
+  }
+
   myprop <- myfreq / len(x2)
   
   if (percent){
