@@ -2,7 +2,7 @@
 % Please edit documentation in R/majutils.R
 \name{ggplot_missing}
 \alias{ggplot_missing}
-\title{Produces ggplot of missingness pattern with numbers of 
+\title{Produces ggplot of missingness pattern with numbers of
 missing at top.}
 \usage{
 ggplot_missing(x)
@@ -11,7 +11,7 @@ ggplot_missing(x)
 \item{x}{Data frame}
 }
 \description{
-Produces ggplot of missingness pattern with numbers of 
+Produces ggplot of missingness pattern with numbers of
 missing at top.
 }
 \examples{

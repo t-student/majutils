@@ -2,7 +2,7 @@
 % Please edit documentation in R/majutils.R
 \name{prop}
 \alias{prop}
-\title{Proportion of entries in a vector equal to 
+\title{Proportion of entries in a vector equal to
 a specified value. Provided as a fraction or
 percentage.}
 \usage{
@@ -18,7 +18,7 @@ prop(x, level, dp = 1, percent = T)
 \item{percent}{provide in percentage terms}
 }
 \description{
-Proportion of entries in a vector equal to 
+Proportion of entries in a vector equal to
 a specified value. Provided as a fraction or
 percentage.
 }

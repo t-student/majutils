@@ -2,7 +2,7 @@
 % Please edit documentation in R/majutils.R
 \name{list_to_df}
 \alias{list_to_df}
-\title{List to data frame (actually tibble). Uses length of 
+\title{List to data frame (actually tibble). Uses length of
 first vector to define number of rows. Uses the names
 of the vectors as the column names of the data.frame.}
 \usage{
@@ -12,7 +12,7 @@ list_to_df(l0)
 \item{l0}{list of vectors all of equal length}
 }
 \description{
-List to data frame (actually tibble). Uses length of 
+List to data frame (actually tibble). Uses length of
 first vector to define number of rows. Uses the names
 of the vectors as the column names of the data.frame.
 }

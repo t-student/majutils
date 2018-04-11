@@ -2,10 +2,10 @@
 % Please edit documentation in R/majutils.R
 \name{plot.missing}
 \alias{plot.missing}
-\title{Method to call to produce ggplot of missingness 
+\title{Method to call to produce ggplot of missingness
 pattern and save to file.}
 \usage{
-plot.missing(df, filename, showme = T, width = 5, height = 5)
+\method{plot}{missing}(df, filename, showme = T, width = 5, height = 5)
 }
 \arguments{
 \item{df}{Data frame}
@@ -19,7 +19,7 @@ plot.missing(df, filename, showme = T, width = 5, height = 5)
 \item{height}{height (cm)}
 }
 \description{
-Method to call to produce ggplot of missingness 
+Method to call to produce ggplot of missingness
 pattern and save to file.
 }
 \examples{

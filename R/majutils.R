@@ -1,20 +1,33 @@
 
 
+#' Converts iqr to sd using a simple
+#' normal approximation rule.
+#'
+#' @param q1 first quartile
+#' @param q3 third quartile
+#' @keywords
+#' @export
+#' @examples
+#' iqr_to_sd()
+iqr_to_sd <- function(q1, q3){
 
+  sd <- (q3 - q1) / 1.35
+  sd
+}
 
 
 
 #' Converts stone to kg.
 #'
 #' @param x value in stone to convert
-#' @keywords 
+#' @keywords
 #' @export
 #' @examples
 #' stone_to_kg()
 stone_to_kg <- function(x = 1){
-  
+
   return(6.35029 * x)
-  
+
 }
 
 
@@ -23,35 +36,35 @@ stone_to_kg <- function(x = 1){
 #' not_numeric.
 #'
 #' @param x vector of values
-#' @keywords 
+#' @keywords
 #' @export
 #' @examples
 #' not_numeric()
 not_numeric <- function(x, do.vec = F){
-  
+
   df.1 <- data_frame(x = as.character(x))
   df.2 <- suppressWarnings(df.1  %>%
     dplyr::filter(is.na(as.numeric(x))))
-  
+
   if(do.vec){
     return(sort(unique(df.2$x)))
   }else{
     return(as_data_frame(x = sort(unique(df.2$x))))
   }
-  
-  
+
+
 }
 
 
 #' Sets up ggplot themes and some other constructor like stuff.
 #'
-#' @keywords 
+#' @keywords
 #' @export
 #' @examples
 #' init()
 init <- function(){
-  
-  
+
+
   ggplot2::theme_set(theme_bw())
   ggplot2::theme_update(legend.position="bottom")
   ggplot2::theme_update(legend.title=element_blank())
@@ -60,7 +73,7 @@ init <- function(){
   ggplot2::theme_update(axis.text.x=element_text(size=10,  family="sans"))
   ggplot2::theme_update(axis.text.y=element_text(size=10,  family="sans"))
   f.sep <- .Platform$file.sep
-  
+
 }
 
 
@@ -79,33 +92,33 @@ init <- function(){
 #' @examples
 #' gg_testplot01()
 gg_testplot01 <- function(){
-  
-  
+
+
   windowsFonts()
   # $serif
   # [1] "TT Times New Roman"
-  # 
+  #
   # $sans
   # [1] "TT Arial"
-  # 
+  #
   # $mono
   # [1] "TT Courier New"
-  
-  
+
+
   library(ggplot2)
   p1 <- ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point() +
     ggtitle("Fuel Efficiency of 32 Cars") +
     xlab("Weight (x1000 lb)") + ylab("Miles per Gallon") +
     theme(text=element_text(size=16,  family="sans"))
-  
+
   p2 <- ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point() +
     ggtitle("Fuel Efficiency of 32 Cars") +
     xlab("Weight (x1000 lb)") + ylab("Miles per Gallon") +
     theme(text=element_text(size=16,  family="serif"))
 
-  
+
   return(list(p1.sans = p1, p2.serif = p2))
-  
+
 }
 
 
@@ -126,12 +139,12 @@ gg_testplot01 <- function(){
 #' @examples
 #' duplicate_df()
 duplicate_df <- function(df, times = 2){
-  
+
   # n <- 10
   # df.new1$subject <- rep(100:109, each = 3)
-  
+
   df.new <- do.call("rbind", replicate(times, df, simplify = FALSE))
-  
+
   return(df.new)
 }
 
@@ -155,36 +168,36 @@ duplicate_df <- function(df, times = 2){
 glm_table <- function(lm1, dp = 2,
                       inverselink = exp,
                       outname = 'tmp.tex'){
-  
+
   s1 <- summary(lm1)
   coefs <- s1$coefficients
-  
+
   if (!is.null(inverselink)){
     coefs[,1] <- inverselink(coefs[,1])
   }
-  
+
   ci <- confint(lm1)
-  
+
   if (!is.null(inverselink)){
     ci[,1] <- inverselink(ci[,1])
     ci[,2] <- inverselink(ci[,2])
   }
  # ci <- round(confint(lm1), dp)
-  
+
   tbl <- data_frame(names = rownames(coefs),
-                    est = sprintf(paste0("%.", dp, "f"), coefs[,1]), 
+                    est = sprintf(paste0("%.", dp, "f"), coefs[,1]),
                     ci = sprintf(paste0("%.", dp, "f", " to ", "%.", dp, "f"),   ci[,1],   ci[,2]),
                     p = replace.p.values(coefs[,4])) %>%
     sapply(., as.character) %>%
     as_data_frame(.) %>%
     xtable::xtable(.)
-  
+
   sink(outname)
-  print(tbl, only.contents=TRUE, include.rownames=F, 
+  print(tbl, only.contents=TRUE, include.rownames=F,
         include.colnames=F, floating=F,
         hline.after=NULL, sanitize.text.function=identity)
   sink()
-  
+
 }
 
 
@@ -214,7 +227,7 @@ replace.p.values <- function(x, dp = 3){
   out
 }
 
-#' Proportion of entries in a vector equal to 
+#' Proportion of entries in a vector equal to
 #' a specified value. Provided as a fraction or
 #' percentage.
 #'
@@ -227,25 +240,25 @@ replace.p.values <- function(x, dp = 3){
 #' @examples
 #' prop()
 prop <- function(x, level, dp = 1, percent = T){
-  
+
   x2 <- as.character(x)
-  
+
   if(is.na(level)){
     myfreq <- length(x2[is.na(x2)])
-    
+
   } else{
     lvl2 <- as.character(level)
     myfreq <- length(x2[x2 == lvl2])
   }
 
   myprop <- myfreq / len(x2)
-  
+
   if (percent){
     myprop <- round(myprop*100, dp)
   } else {
     myprop <- round(myprop, dp)
   }
-  
+
   myprop
 }
 
@@ -263,22 +276,22 @@ prop <- function(x, level, dp = 1, percent = T){
 #' @examples
 #' freq_prop()
 freq_prop <- function(x, level, dp = 1, percent = T){
-  
-  
+
+
   myprop <- prop(x, level, dp, percent)
-  
+
   x2 <- as.character(x)
-  
+
   if(is.na(level)){
     myfreq <- length(x2[is.na(x2)])
-    
+
   } else{
     lvl2 <- as.character(level)
     myfreq <- length(x2[x2 == lvl2])
   }
-  
+
   my.stat <- paste0(myfreq, " (", myprop, ")")
-  
+
   my.stat
 }
 
@@ -286,7 +299,7 @@ freq_prop <- function(x, level, dp = 1, percent = T){
 
 
 
-#' List to data frame (actually tibble). Uses length of 
+#' List to data frame (actually tibble). Uses length of
 #' first vector to define number of rows. Uses the names
 #' of the vectors as the column names of the data.frame.
 #'
@@ -296,10 +309,10 @@ freq_prop <- function(x, level, dp = 1, percent = T){
 #' @examples
 #' list_to_df()
 list_to_df <- function(l0){
-  
+
   df1 <- data.frame(matrix(unlist(l0), nrow=length(l0[[1]]), byrow=F), stringsAsFactors=FALSE)
   names(df1) <- names(l0)
-  
+
   return(as_data_frame(df1))
 }
 
@@ -319,32 +332,32 @@ list_to_df <- function(l0){
 #' @examples
 #' diff_means()
 diff_means <- function(x1, x2, s1, s2, n1, n2){
-  
+
   x.diff <- x2 - x1
-  
+
   s.pooled <- pooled_sd(s1, s2, n1, n2)
-  
+
   v <- dof_approx(s1, s2, n1, n2)
-  
-  
+
+
   t.obs <- x.diff / s.pooled
-  
-  ciMult <- qt(0.95/2 + .5, v) 
-  
+
+  ciMult <- qt(0.95/2 + .5, v)
+
   ci <- s.pooled * ciMult
-  
+
   lwr <- x.diff - ci
   upr <- x.diff + ci
-  
-  reslist = list(x.diff = x.diff, 
+
+  reslist = list(x.diff = x.diff,
                  s.pooled = s.pooled,
-                 t.obs = t.obs, 
-                 t.crit = ciMult, 
+                 t.obs = t.obs,
+                 t.crit = ciMult,
                  lwr = lwr,
                  upr = upr)
-  
+
   return(reslist)
-  
+
 }
 
 
@@ -360,7 +373,7 @@ diff_means <- function(x1, x2, s1, s2, n1, n2){
 #' @examples
 #' pooled_sd()
 pooled_sd <- function(s1, s2, n1, n2){
-  
+
   s.pooled <- sqrt(((s1^2)/ n1)     +    ((s2^2)/ n2))
   s.pooled
 }
@@ -377,26 +390,26 @@ pooled_sd <- function(s1, s2, n1, n2){
 #' @examples
 #' dof_approx()
 dof_approx <- function(s1, s2, n1, n2){
-  
+
   var1 <- s1^2
   var2 <- s2^2
-  
+
   n1.2 <- n1^2
   n2.2 <- n2^2
-  
+
   var1.2 <- s1^4
   var2.2 <- s2^4
-  
+
   v1 <- n1 - 1
   v2 <- n2 - 1
-  
+
   top <-    ( (var1/n1) + (var2/n2) )^2
   bottom <- ( (var1.2/(n1.2 * v1))   +   (var2.2/(n2.2 * v2))  )
-  
-  v <- top / bottom  
-  
+
+  v <- top / bottom
+
   return(v)
-  
+
 }
 
 
@@ -409,23 +422,23 @@ dof_approx <- function(s1, s2, n1, n2){
 #' @examples
 #' desc.stat.str()
 desc.stat.str <- function(x){
-  
-  
+
+
   n <- sum(!is.na(x))
   mean <- mean(x, na.rm = T)
   sd <- sd(x, na.rm = T)
   min <- min(x, na.rm = T)
   max <- max(x, na.rm = T)
-  
+
   q1 <- as.numeric(quantile(x, probs = 0.25, na.rm = T))
   q2 = as.numeric(median(x, na.rm = T))
   q3 <- as.numeric(quantile(x, probs = 0.75, na.rm = T))
-  
-  
+
+
   res <- sprintf("%s & %.2f & %.2f & %s & %s & %s & %s & %s", n, mean, sd, min, max, q1, q2, q3)
-  
+
   return(res)
-  
+
 }
 
 
@@ -442,9 +455,9 @@ desc.stat.str <- function(x){
 #' @examples
 #' col.names()
 col.names <- function(df){
-  
+
   return(as.data.frame(names(df)))
-  
+
 }
 
 
@@ -457,9 +470,9 @@ col.names <- function(df){
 #' @examples
 #' len.unique()
 len.unique <- function(x){
-  
+
   return(length(unique(x)))
-  
+
 }
 
 
@@ -472,22 +485,22 @@ len.unique <- function(x){
 #' @examples
 #' glm.check.res.dev()
 glm.check.res.dev <- function(myglm){
-  
+
   # residual deviance
   dev <- deviance(myglm)
-  
+
   df <- myglm$df.residual
-  
+
   p <- 1 - pchisq(dev, df)
   pr <- residuals(myglm, "pearson")
-  
+
   res1 <- sprintf("ChiSq: %.2f", qchisq(0.95, myglm$df.residual))
   res2 <- sprintf("Dev  : %.2f", deviance(myglm))
   res3 <- sprintf("p    : %.5f", p)
   res4 <- sprintf("Fit  : %s", ifelse(p < 0.05, "poor", "ok"))
-  
+
   return(paste(res1, res2, res3, res4, sep = '\n'))
-  
+
 }
 
 
@@ -499,34 +512,34 @@ glm.check.res.dev <- function(myglm){
 #' @export
 #' @examples
 #' corstarsl(x)
-corstarsl <- function(x){ 
-  require(Hmisc) 
-  x <- as.matrix(x) 
-  R <- rcorr(x)$r 
-  p <- rcorr(x)$P 
+corstarsl <- function(x){
+  require(Hmisc)
+  x <- as.matrix(x)
+  R <- rcorr(x)$r
+  p <- rcorr(x)$P
   mystars <- ifelse(p < .001, "***", ifelse(p < .01, "** ", ifelse(p < .05, "* ", " ")))
-  R <- format(round(cbind(rep(-1.11, ncol(x)), R), 2))[,-1] 
-  
-  ## build a new matrix that includes the correlations with their apropriate stars 
-  Rnew <- matrix(paste(R, mystars, sep=""), ncol=ncol(x)) 
-  diag(Rnew) <- paste(diag(R), " ", sep="") 
-  rownames(Rnew) <- colnames(x) 
-  colnames(Rnew) <- paste(colnames(x), "", sep="") 
-  
+  R <- format(round(cbind(rep(-1.11, ncol(x)), R), 2))[,-1]
+
+  ## build a new matrix that includes the correlations with their apropriate stars
+  Rnew <- matrix(paste(R, mystars, sep=""), ncol=ncol(x))
+  diag(Rnew) <- paste(diag(R), " ", sep="")
+  rownames(Rnew) <- colnames(x)
+  colnames(Rnew) <- paste(colnames(x), "", sep="")
+
   ## remove upper triangle
   Rnew <- as.matrix(Rnew)
   Rnew[upper.tri(Rnew, diag = TRUE)] <- ""
-  Rnew <- as.data.frame(Rnew) 
-  
+  Rnew <- as.data.frame(Rnew)
+
   ## remove last column and return the matrix (which is now a data frame)
   Rnew <- cbind(Rnew[1:length(Rnew)-1])
-  return(Rnew) 
+  return(Rnew)
 }
 
 
 #' Number of levels in a factor vector
 #'
-#' 
+#'
 #' @param x Vector of p-values
 #' @keywords cats
 #' @export
@@ -538,12 +551,12 @@ how_many_levels <- function(x){
   } else {
     length(levels(x))
   }
-  
+
 }
 
 
 #' Used by Cbind
-#' 
+#'
 #' @param mydata Data
 #' @param rowsneeded Number of padding rows
 #' @param first Do first row
@@ -551,20 +564,20 @@ how_many_levels <- function(x){
 #' @export
 #' @examples
 #' padNA(mydata, rowsneeded, first = TRUE)
-padNA <- function (mydata, rowsneeded, first = TRUE) 
+padNA <- function (mydata, rowsneeded, first = TRUE)
 {
   temp1 = colnames(mydata)
   rowsneeded = rowsneeded - nrow(mydata)
   temp2 = setNames(
-    data.frame(matrix(rep(NA, length(temp1) * rowsneeded), 
+    data.frame(matrix(rep(NA, length(temp1) * rowsneeded),
                       ncol = length(temp1))), temp1)
   if (isTRUE(first)) rbind(mydata, temp2)
   else rbind(temp2, mydata)
 }
 
 #' Used by Cbind
-#' 
-#' @param 
+#'
+#' @param
 #' @keywords cats
 #' @export
 #' @examples
@@ -577,8 +590,8 @@ dotnames <- function(...) {
 
 #' Version of cbind to use when you have different length data.frames
 #'
-#' 
-#' @param 
+#'
+#' @param
 #' @keywords cats
 #' @export
 #' @examples
@@ -586,10 +599,10 @@ dotnames <- function(...) {
 Cbind <- function(..., first = TRUE) {
   Names <- dotnames(...)
   datalist <- setNames(list(...), Names)
-  
+
   datalist <- lapply(datalist, as.data.frame)
-  
-  nrows <- max(sapply(datalist, function(x) 
+
+  nrows <- max(sapply(datalist, function(x)
     ifelse(is.null(dim(x)), length(x), nrow(x))))
   datalist <- lapply(seq_along(datalist), function(x) {
     z <- datalist[[x]]
@@ -610,8 +623,8 @@ Cbind <- function(..., first = TRUE) {
 
 #' Identifies the max sensitivity and specificity cutpoints
 #'
-#' 
-#' @param 
+#'
+#' @param
 #' @keywords cats
 #' @export
 #' @examples
@@ -624,8 +637,8 @@ cutpt.max.sens.spec <- function(x){
 
 #' Another cut point
 #'
-#' 
-#' @param 
+#'
+#' @param
 #' @keywords cats
 #' @export
 #' @examples
@@ -638,8 +651,8 @@ optimal_lr.eta=function(x){
 
 #' Another cut point
 #'
-#' 
-#' @param 
+#'
+#' @param
 #' @keywords cats
 #' @export
 #' @examples
@@ -654,8 +667,8 @@ optimal_cutpoint=function(x){
 
 #' CI for logistic regression model (for odds ratios)
 #'
-#' 
-#' @param 
+#'
+#' @param
 #' @keywords cats
 #' @export
 #' @examples
@@ -663,17 +676,17 @@ optimal_cutpoint=function(x){
 ci.logistic <- function(lm, dp = 3){
   or <- round(exp(coef(lm)), dp)
   ci <- round(exp(confint.default(lm)), dp)
-  
+
   df = data.frame(or = or, lwr = ci[,1], upr = ci[,2])
-  
+
   return(df)
 }
 
 #' Replace a value with another value.
 #' Useful for datasets where the null value is coded 99 etc.
 #'
-#' 
-#' @param 
+#'
+#' @param
 #' @keywords cats
 #' @export
 #' @examples
@@ -688,7 +701,7 @@ replace.me <- function(x, repl = 88){
 
 #' How many are missing in my vector x
 #'
-#' 
+#'
 #' @param x Vector of p-values
 #' @keywords cats
 #' @export
@@ -703,23 +716,23 @@ n.miss <- function(x){
 
 #' Means and standard deviation reported as string
 #'
-#' 
+#'
 #' @param x Vector of numeric values
 #' @keywords cats
 #' @export
 #' @examples
 #' mean_sd()
 mean_sd <- function(x, dp = 2){
-  
+
   my.stat <- paste0(round(mean(x, na.rm = T), dp), " (",
                     round(sd(x, na.rm = T), dp),")")
-  
+
   return(my.stat)
 }
 
 #' Abbreviatin for length
 #'
-#' 
+#'
 #' @param x Vector of values
 #' @keywords cats
 #' @export
@@ -730,30 +743,30 @@ len <- function(x){
 }
 
 
-#' Produces ggplot of missingness pattern with numbers of 
+#' Produces ggplot of missingness pattern with numbers of
 #' missing at top.
 #'
-#' 
+#'
 #' @param x Data frame
 #' @keywords cats
 #' @export
 #' @examples
 #' ggplot_missing()
 ggplot_missing <- function(x){
-  
+
   require(grid)
   require(ggplot2)
-  
+
   # Rownumber, variable, indicator of missingness
-  df.miss <- x %>% 
+  df.miss <- x %>%
     is.na %>%
     reshape2::melt(.)
-  
+
   df.sum <- df.miss %>%
     dplyr::group_by(Var2) %>%
     dplyr::summarise(n.miss = sum(value))
   n.recs <- nrow(x)
-  
+
   myylab <- paste0("Participant (n = ", n.recs, ")")
 
   p <- ggplot(data = df.miss, aes(x = Var2,y = Var1)) +
@@ -765,36 +778,36 @@ ggplot_missing <- function(x){
     theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
           panel.background = element_blank(), axis.line = element_line(colour = "black"))+
     theme(legend.position="none")+
-    theme(axis.text.x  = element_text(angle=45, hjust=1, vjust=0.9)) + 
+    theme(axis.text.x  = element_text(angle=45, hjust=1, vjust=0.9)) +
     labs(x = "", y = myylab)+
     theme(plot.margin = unit(c(2,1,1,1), "lines"))
-  
+
   # Add number missing at top of plot
   for (i in 1:length(df.sum$Var2))  {
     p <- p + annotation_custom(
-      grob = textGrob(label = df.sum$n.miss[i], 
-                      hjust = 0, 
+      grob = textGrob(label = df.sum$n.miss[i],
+                      hjust = 0,
                       gp = gpar(cex = 0.7)),
       ymin = n.recs + 10,      # Vertical position of the textGrob
       ymax = n.recs + 10,
-      xmin = df.sum$Var2[i],  
+      xmin = df.sum$Var2[i],
       xmax = df.sum$Var2[i])
-  }  
-  
-  
+  }
+
+
   gt <- ggplot_gtable(ggplot_build(p))
   gt$layout$clip[gt$layout$name == "panel"] <- "off"
   grid.draw(gt)
-  
-  
-  
+
+
+
 }
 
 
-#' Method to call to produce ggplot of missingness 
+#' Method to call to produce ggplot of missingness
 #' pattern and save to file.
 #'
-#' 
+#'
 #' @param df Data frame
 #' @param filename file of plot (uses Output directory as prefix)
 #' @param showme display plot as well as save
@@ -804,14 +817,14 @@ ggplot_missing <- function(x){
 #' @export
 #' @examples
 #' plot.missing()
-plot.missing <- function(df, filename, showme = T, 
+plot.missing <- function(df, filename, showme = T,
                          width = 5, height = 5){
   pdf(file=paste0("../../Output/", filename),
       width=width,
       height=height)
   print(ggplot_missing(df))
   dev.off()
-  
+
   if(showme){
     print(ggplot_missing(df))
   }
@@ -825,7 +838,7 @@ plot.missing <- function(df, filename, showme = T,
 
 #' returns string w/o leading whitespace
 #'
-#' 
+#'
 #' @param x vector of character strings
 #' @keywords cats
 #' @export
@@ -836,7 +849,7 @@ trim.leading <- function (x)  sub("^\\s+", "", x)
 
 #' returns string w/o trailing whitespace
 #'
-#' 
+#'
 #' @param x vector of character strings
 #' @keywords cats
 #' @export
@@ -847,7 +860,7 @@ trim.trailing <- function (x) sub("\\s+$", "", x)
 
 #' returns string w/o leading or trailing whitespace
 #'
-#' 
+#'
 #' @param x vector of character strings
 #' @keywords cats
 #' @export
@@ -860,7 +873,7 @@ trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 
 #' returns string up to the first instance of whitespace
 #'
-#' 
+#'
 #' @param x vector of character strings
 #' @keywords cats
 #' @export
