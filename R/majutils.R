@@ -1,5 +1,34 @@
 
 
+
+
+
+#' Generates a n random numbers from a wedgeshaped
+#' distribution with lower value 0 and upper value x.
+#'
+#' @param n number of values to produce
+#' @param upr upper bound of wedge
+#' @keywords
+#' @export
+#' @examples
+#' rwedge()
+rwedge <- function(n = 1, upr = 3.12){
+  if (upr < 0){
+    return(0)
+  }
+
+  h <- 2 / upr
+  m <- h / upr
+
+  u <- runif(n = n)
+  x <- sqrt(u/(m/2))
+  x
+}
+
+
+
+
+
 #' Converts iqr to sd using a simple
 #' normal approximation rule.
 #'
@@ -44,7 +73,7 @@ not_numeric <- function(x, do.vec = F){
 
   df.1 <- data_frame(x = as.character(x))
   df.2 <- suppressWarnings(df.1  %>%
-    dplyr::filter(is.na(as.numeric(x))))
+                             dplyr::filter(is.na(as.numeric(x))))
 
   if(do.vec){
     return(sort(unique(df.2$x)))
@@ -182,7 +211,7 @@ glm_table <- function(lm1, dp = 2,
     ci[,1] <- inverselink(ci[,1])
     ci[,2] <- inverselink(ci[,2])
   }
- # ci <- round(confint(lm1), dp)
+  # ci <- round(confint(lm1), dp)
 
   tbl <- data_frame(names = rownames(coefs),
                     est = sprintf(paste0("%.", dp, "f"), coefs[,1]),
@@ -880,6 +909,8 @@ trim <- function (x) gsub("^\\s+|\\s+$", "", x)
 #' @examples
 #' extract.up.to.whitespace()
 extract.up.to.whitespace <- function(x) gsub( " .*$", "", x )
+
+
 
 
 
