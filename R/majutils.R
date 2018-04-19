@@ -1,4 +1,288 @@
 
+#' Various expss examples.
+#' @keywords
+#' @export
+#' @examples
+#' @seealso \url{https://cran.r-project.org/web/packages/expss/vignettes/tables-with-labels.html}
+#' expss.tab.example()
+expss.tab.example <- function(){
+  require(expss)
+
+  set.seed(324)
+
+  df.tab <- data.frame(age = sample(30:35, size = 100, replace = T),
+                        sex = sample(0:1, size = 100, replace = T))
+
+  df.tab[sample(1:100, size = 10, replace = F),2] <- NA
+
+  table(df.tab$age, df.tab$sex, useNA = "always")
+
+  list(expss::cro(df.tab$age, df.tab$sex),
+       expss::fre(df.tab$age),
+       expss::fre(df.tab$sex))
+
+}
+
+
+
+#' Performs a simple lmm analysis to illustrate how to compute
+#' confidence intervals of means.
+#' Need to switch over to emmeans.
+#' WARNING - this function invokes bayesian analysis with MCMC
+#' @keywords
+#' @export
+#' @examples
+#' @seealso \url{https://cran.r-project.org/web/packages/emmeans/index.html}
+#' basic.lmm.analysis()
+basic.lmm.analysis <- function(){
+
+
+  require(brms)
+  require(lme4)
+  require(multcomp)
+  require(lsmeans)
+
+  # Must set your own seed
+  set.seed(2)
+  df <- basic.lmm.dat(400, plot = F)
+  df$period <- factor(df$period)
+
+  df.means <- df %>%
+    dplyr::group_by(trt, period) %>%
+    dplyr::summarise(mean = mean(y))
+
+  #summary(lmm1 <- lmerTest::lmer(y ~ trt + period + (1|id), data = df))
+  #summary(lmm2 <- lmerTest::lmer(y ~ trt * period + (1|id), data = df))
+  summary(lmm1 <- lme4::lmer(y ~ trt + period + (1|id), data = df))
+  summary(lmm2 <- lme4::lmer(y ~ trt * period + (1|id), data = df))
+
+
+
+
+  # confint(lmm1)
+  # trt          6.0749946  6.8258460
+
+
+  df.new <- expand.grid(trt = c(0, 1),
+                        period = as.factor(levels(df$period)),
+                        id = 99999)
+
+  bb1 <- predict.lmm(lmm1, df.new, nsim = 999)
+
+  # str(bb)
+
+  # The results are set up in column format with one column
+  # for each row of the newdata data.frame
+  # So column 1 corresponds to estimated value of the response
+  # for the control group at baseline.
+  # Column 2 corresponds to the estimated value of the response
+  # for the trt group at baseline.
+  # Column 3 corresponds to the estimated value of the response
+  # for the control group at period 1
+  # Column 4 corresponds to the estimated value of the response
+  # for the trt group at period 1
+  # etc
+  # bb1$t
+
+  # Difference between trt and control at baseline
+  diff.t0 <- mean(bb1[,2] - bb1[,1])
+  diff.t0.ci <- quantile(bb1[,2] - bb1[,1], probs = c(0.0275, 0.975))
+
+  diff.t1 <- mean(bb1[,4] - bb1[,3])
+  diff.t1.ci <- quantile(bb1[,4] - bb1[,3], probs = c(0.0275, 0.975))
+
+  diff.t2 <- mean(bb1[,6] - bb1[,5])
+  diff.t2.ci <- quantile(bb1[,6] - bb1[,5], probs = c(0.0275, 0.975))
+
+  (df1 <- rbind(c(diff.t0, diff.t0.ci),
+               c(diff.t1, diff.t1.ci),
+               c(diff.t2, diff.t2.ci)))
+
+
+  # What about the model that is specified correctly?
+  bb2 <- predict.lmm(lmm2, df.new, nsim = 999)
+
+  # Difference between trt and control at baseline
+  diff.t0 <- mean(bb2[,2] - bb2[,1])
+  diff.t0.ci <- quantile(bb2[,2] - bb2[,1], probs = c(0.0275, 0.975))
+
+  diff.t1 <- mean(bb2[,4] - bb2[,3])
+  diff.t1.ci <- quantile(bb2[,4] - bb2[,3], probs = c(0.0275, 0.975))
+
+  diff.t2 <- mean(bb2[,6] - bb2[,5])
+  diff.t2.ci <- quantile(bb2[,6] - bb2[,5], probs = c(0.0275, 0.975))
+
+  (df1 <- rbind(c(diff.t0, diff.t0.ci),
+                c(diff.t1, diff.t1.ci),
+                c(diff.t2, diff.t2.ci)))
+
+
+  # Verus lsmeans/multcomp
+  C <- matrix(c( 0,1,0,0),    nrow = 1, byrow = T)
+
+  row.names(C) <- c("TRt Diff")
+  # summary(glht(lmm.a2, linfct = mcp(arm = "Tukey")), test = adjusted("holm"))
+  lmm.means <- multcomp::glht(lmm1, linfct=C)
+  (s <- summary(lmm.means, test = multcomp::adjusted(type = "none")) )
+  confint(lmm.means, calpha = multcomp::univariate_calpha() )
+
+  # Verus lsmeans/multcomp
+  C <- matrix(c(0,1,0,0,0,0,
+                0,1,0,0,1,0,
+                0,1,0,0,0,1),    nrow = 3, byrow = T)
+
+  row.names(C) <- c("Trt Diff baseline",
+                    "Trt Diff D1",
+                    "Trt Diff D2")
+  # summary(glht(lmm.a2, linfct = mcp(arm = "Tukey")), test = adjusted("holm"))
+  lmm.means <- multcomp::glht(lmm2, linfct=C)
+  (s <- summary(lmm.means, test = multcomp::adjusted(type = "none")) )
+  confint(lmm.means, calpha = multcomp::univariate_calpha() )
+
+
+
+
+  # Now a bayesian approach
+  # Naive priors / defaults
+  myf <- brms::bf(y ~ trt * period + (1|id))
+  lmm3 <- brms::brm(myf,
+                    data = df,
+                    family = gaussian(),
+                    control = list(max_treedepth = 10),
+                    iter = 2000,
+                    chains = 2, cores = 6, seed = 5453, save_model = "brm1.txt")
+  summary(lmm3, waic = TRUE)
+
+  # marginal_effects(lmm3, surface = TRUE)
+  # ranef(lmm3)
+  # predict(lmm3, newdata = df.new, allow_new_levels = T)
+
+
+  samples1 <- posterior_samples(lmm3, "^b")
+  head(samples1)
+
+  dim(samples1)
+
+  b1 <- matrix(c(0, 1, 0, 0, 0, 0,
+                 1, 0, 0, 0, 0, 0,
+                 1, 1, 0, 0, 0, 0),
+               byrow = F,
+               nrow = 6)
+
+  test1 <- as.matrix(samples1) %*% b1
+  colMeans(test1)
+  t(apply(test1, 2, quantile, probs = c(0.0275, 0.975)))
+
+
+
+}
+
+
+#' Creates three period temporal data
+#' with two arms.
+#' Difference at baseline is 3 units
+#' Difference at time 1 is 5 units
+#' Difference at time 2 is 15 units
+#'
+#' @param n.per.timept number of points per timept (even number)
+#' @param plot plot data if T
+#' @keywords
+#' @export
+#' @examples
+#' basic.lmm.dat()
+basic.lmm.dat <- function(n.per.timept = 100,
+                          plot = T){
+
+  require(simstudy)
+  require(ggplot2)
+
+  tdef <- defData(varname = "trt", dist = "binary", formula = 0.5)
+  # tdef <- defData(tdef, varname = "y0", dist = "normal", formula = "3 * trt", variance = 1)
+  tdef <- defData(tdef, varname = "y0", dist = "normal", formula = "3", variance = 1)
+  tdef <- defData(tdef, varname = "y1", dist = "normal", formula = "y0 + 5 + 5 * trt",
+                  variance = 1)
+  tdef <- defData(tdef, varname = "y2", dist = "normal", formula = "y0 + 10 + 15 * trt",
+                  variance = 1)
+
+  dtTrial <- genData(n.per.timept, tdef)
+  dtTime <- addPeriods(dtTrial,
+                       nPeriods = 3,
+                       idvars = "id",
+                       timevars = c("y0", "y1", "y2"),
+                       timevarName = "y")
+
+  head(as.data.frame(dtTime))
+
+  if (plot == T){
+    p <- ggplot(data = dtTime, aes(x = period, y = y,
+                              group = trt, colour = trt))+
+      geom_jitter(width = 0.2)
+    # +
+      #geom_smooth(se = F, method = "loess")
+    print(p)
+  }
+
+  return(as.data.frame(dtTime))
+}
+
+
+#' Bootstraps based on provided lmm and newdata data frame.
+#' Returns the bootstrap samples enabling you to estimate
+#' whatever you want.
+#'
+#' @param lmm
+#' @param df.new
+#' @param nsim
+#' @keywords
+#' @export
+#' @examples
+#' predict.lmm()
+predict.lmm <- function(lmm,
+                        newdata = df.new,
+                        nsim = 10,
+                        seed = 1) {
+
+  require(lme4)
+
+  if(nsim == 10){cat('Warning you are only conducting 10 simulations.')}
+
+  # alphalow <- alpha / 2
+  # alphaupr <- 1 - (alpha / 2)
+
+  # re.form=NULL implies include all random effects
+  # ~0 or NA both say ignore the random effects
+  pred.fun <- function(.) {
+    p <- predict(.,
+                 re.form=NULL,
+                 newdata=newdata,
+                 allow.new.levels = T)
+    p
+  }
+  # extract.lowhi <- function(x) {
+  #   qci <- quantile(x, probs = c(alphalow, alphaupr))
+  #   as.numeric(qci)
+  # }
+
+  # Bootstrap
+
+  predict(lmm,
+          re.form=NULL,
+          newdata=newdata,
+          allow.new.levels = T)
+
+  bb <- lme4::bootMer(lmm, FUN=pred.fun, nsim=nsim, seed = seed)
+
+  bb$t
+}
+
+
+
+
+
+
+
+
+
 
 
 
