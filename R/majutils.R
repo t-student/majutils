@@ -1,3 +1,43 @@
+#' GLM plots
+#' @param lm0 (lm or glm)
+#' @keywords
+#' @export
+#' @examples
+#' lmplot()
+lmplot <- function(lm0){
+  par(mfrow=c(2,2)) # Change the panel layout to 2 x 2
+  plot(lm0)
+  par(mfrow=c(1,1))
+}
+
+
+
+
+
+#' Standard error estimates the standard deviation of
+#' sample means.
+#' @keywords
+#' @export
+#' @examples
+#' sd.vs.se()
+sd.vs.se <- function(){
+
+  set.seed(458)
+  m <- vector()
+  x <- rnorm(300, 5)
+  se <- sd(x)/sqrt(length(x))
+  for (i in 1:1000){
+
+    x <- rnorm(300, 5)
+    m[i] <- mean(x)
+
+  }
+
+  sd(m)
+}
+
+
+
 
 #' Various expss examples.
 #' @keywords
