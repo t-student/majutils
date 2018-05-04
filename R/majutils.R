@@ -395,16 +395,15 @@ stone_to_kg <- function(x = 1){
 #' not_numeric()
 not_numeric <- function(x, do.vec = F){
 
-  df.1 <- data_frame(x = as.character(x))
+  df.1 <- data.frame(x = as.character(x))
   df.2 <- suppressWarnings(df.1  %>%
                              dplyr::filter(is.na(as.numeric(x))))
 
   if(do.vec){
     return(sort(unique(df.2$x)))
   }else{
-    return(as_data_frame(x = sort(unique(df.2$x))))
+    return(as.data.frame(x = sort(unique(df.2$x))))
   }
-
 
 }
 
@@ -537,7 +536,7 @@ glm_table <- function(lm1, dp = 2,
   }
   # ci <- round(confint(lm1), dp)
 
-  tbl <- data_frame(names = rownames(coefs),
+  tbl <- data.frame(names = rownames(coefs),
                     est = sprintf(paste0("%.", dp, "f"), coefs[,1]),
                     ci = sprintf(paste0("%.", dp, "f", " to ", "%.", dp, "f"),   ci[,1],   ci[,2]),
                     p = replace.p.values(coefs[,4])) %>%

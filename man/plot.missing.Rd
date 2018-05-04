@@ -5,7 +5,7 @@
 \title{Method to call to produce ggplot of missingness
 pattern and save to file.}
 \usage{
-\method{plot}{missing}(df, filename, showme = T, width = 5, height = 5)
+plot.missing(df, filename, showme = T, width = 5, height = 5)
 }
 \arguments{
 \item{df}{Data frame}
